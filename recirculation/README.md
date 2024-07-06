@@ -19,7 +19,7 @@ Quad 16 ports do not have access to the packet generators. In general, it is rec
 One may use the formula `r = 68 + p * 128` to find the first recirculation port for each pipe `p`.
 For each pipe, `r` can be used as a single `100G` port, or split into 4x `25G` ports. By default:
 
-|            | C onfiguration  |
+|            | Configuration  |
 | ---------  | ------------------ |
 | **ASIC**  | `r` in `100G` mode (`r+1, r+2, r+3` are not available) |
 | **Model** | `r` split to `r, r+1, r+2, r+3` (as if in 4x`25G` mode) |
