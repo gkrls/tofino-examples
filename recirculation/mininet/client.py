@@ -14,7 +14,6 @@ class Recirc(Packet):
     name = "recirc"
     fields_desc = [
         IntField('steps', 0),
-        IntField('count', 0),
         FieldListField("pipes", [0,0,0,0], ShortField("p", 0), count_from=lambda p: 4),
     ]
 
@@ -27,7 +26,6 @@ print("\nGive the number of steps or type 'q'/'quit' to quit...\n")
 def path(pipes):
     res = []
     s = 0
-
     stop = False
     while True:
         for pipe in range(4):
@@ -39,7 +37,6 @@ def path(pipes):
         if stop:
             break
     return res
-    
 
 while(True):
     s = input("steps: ")
@@ -62,7 +59,7 @@ while(True):
         if p_in[Recirc]:
             # p_in[Recirc].show()
             p = path(p_in[Recirc].pipes)
-            print('pipes:', len(p), '::', " > ".join(map(str, p)))
+            print('pipes:', " > ".join(map(str, p)), "-> EGRESS")
         else:
             print("Got response without recirc!!!!")
     else:

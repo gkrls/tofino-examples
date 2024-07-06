@@ -1,12 +1,3 @@
-typedef bit<48> mac_addr_t;
-typedef bit<16> eth_type_t;
-
-header ethernet_h {
-  mac_addr_t dst_addr;
-  mac_addr_t src_addr;
-  eth_type_t ether_type;
-}
-
 struct empty_header_t {}
 struct empty_metadata_t {}
 
@@ -34,6 +25,27 @@ parser TofinoEgressParser( packet_in P,
   }
 }
 
+control DefaultIngressDeparser( packet_out P,
+                                inout header_t H, in empty_metadata_t M,
+                                in ingress_intrinsic_metadata_for_deparser_t DIM) {
+  apply { P.emit(H); }
+}
+
+parser DefaultEgressParser( packet_in P,
+                            out empty_header_t H, out empty_metadata_t M,
+                            out egress_intrinsic_metadata_t  IM) {
+  state start {
+    P.extract(IM);
+    transition accept;
+  }
+}
+
+control DefaultEgressDeparser( packet_out P,
+                               inout empty_header_t H, in empty_metadata_t M,
+                               in egress_intrinsic_metadata_for_deparser_t DIM) {
+  apply { P.emit(H); }
+}
+
 control EmptyEgress(inout empty_header_t H, inout empty_metadata_t M,
                     in egress_intrinsic_metadata_t IM,
                     in egress_intrinsic_metadata_from_parser_t PIM,
@@ -41,3 +53,5 @@ control EmptyEgress(inout empty_header_t H, inout empty_metadata_t M,
                     inout egress_intrinsic_metadata_for_output_port_t OPIM) {
   apply {}
 }
+
+
