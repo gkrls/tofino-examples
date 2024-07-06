@@ -18,7 +18,8 @@ header recirc_h {
   bit<16> pipe3;
 }
 
-// Internal header used
+// Internal header used to carry state between recirculations
+// Must be padded for byte alignment
 header bridge_h {
   bit<32> remaining;
   PortId_t initial_port;
